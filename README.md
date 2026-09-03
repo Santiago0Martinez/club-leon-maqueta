@@ -15,4 +15,4 @@ Sistema integral de gestión web para clubes deportivos, equipos y administraci�
 * **Despliegue y Contenedores:** Docker & Docker Compose.
 ## 🚀 Vista Previa (Live Demo)
 Puedes navegar por las interfaces estáticas del sistema directamente desde este enlace:
-[👉 Clic aquí para ver la maqueta interactiva](PON_AQUI_TU_LINK_DE_GITHUB_PAGES)
+[👉 Clic aquí para ver la maqueta interactiva]( https://santiago0martinez.github.io/club-leon-maqueta/PRESENTACION_ESTATICA/)
