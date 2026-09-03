@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Jugadores - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
+        repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px);
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .container {
+      width: 900px;
+      background: rgba(52, 195, 143, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 3px solid #5060cc;
+    }
+
+    .header {
+      background: #1a1a1a;
+      padding: 12px 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-regresar {
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-regresar:hover {
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .content {
+      padding: 50px 70px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: #111;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      color: #1a1a1a;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    input, select {
+      width: 100%;
+      background: #1a1a1a;
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #5060cc;
+      box-shadow: 0 0 0 4px rgba(80, 96, 204, 0.2);
+    }
+
+    input::placeholder {
+      color: #666;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    select option {
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 30px;
+      background: #111;
+      color: white;
+      border: 3px solid #2ecc71;
+    }
+
+    .btn:hover {
+      background: #2ecc71;
+      color: #111;
+      transform: translateY(-3px);
+    }
+
+    /* Balón decorativo */
+    .ball {
+      position: absolute;
+      left: -30px;
+      bottom: -30px;
+      width: 110px;
+      opacity: 0.2;
+    }
+
+    /* Jugador decorativo */
+    .player {
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      width: 150px;
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <button class="btn-regresar" onclick="location.href='menu-opciones.html'">⬅ Regresar al Menú</button>
+    </div>
+
+    <div class="content">
+      <!-- Balón SVG -->
+      <svg class="ball" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="95" fill="white" stroke="#111" stroke-width="6"/>
+        <polygon points="100,40 134,63 121,102 79,102 66,63" fill="#111"/>
+      </svg>
+
+      <!-- Jugador SVG -->
+      <svg class="player" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="30" rx="22" ry="24" fill="#111"/>
+        <path d="M88 54 Q80 100 75 130 L145 130 Q140 100 132 54 Z" fill="#111"/>
+        <path d="M125 130 Q145 180 175 200" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <h1>Registro de jugadores</h1>
+      <p class="subtitle">Club Deportivo León Saltillo</p>
+
+      <form id="formJugador">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input type="text" id="nombre" placeholder="Pedro" required>
+        </div>
+
+        <div class="form-group">
+          <label>Apellido:</label>
+          <input type="text" id="apellido" placeholder="Juarez Peña" required>
+        </div>
+
+        <div class="form-group">
+          <label>CURP:</label>
+          <input type="text" id="curp" placeholder="PJPI10604MINHLIBA" maxlength="18" required>
+        </div>
+
+        <div class="form-group">
+          <label>Teléfono de emergencia:</label>
+          <input type="tel" id="telefono" placeholder="1234567890" maxlength="10" required>
+        </div>
+
+        <div class="form-group">
+          <label>Selección de equipo</label>
+          <select id="equipo" required>
+            <option value="">Cargando equipos...</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn">Dar de alta</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // 1. Cargar equipos reales desde la BD al iniciar la página
+    document.addEventListener("DOMContentLoaded", async () => {
+      const selectEquipo = document.getElementById('equipo');
+      
+      try {
+        const response = await fetch('obtener_equipos.php');
+        const text = await response.text();
+        
+        if (!text) throw new Error("Respuesta vacía del servidor");
+        
+        const respuesta = JSON.parse(text);
+        const equipos = respuesta.data; // <--- AQUÍ ABRIMOS LA CAJA "DATA"
+        
+        // Limpiar opciones y poner la default
+        
+        // Limpiar opciones y poner la default
+        selectEquipo.innerHTML = '<option value="">Selecciona un equipo</option>';
+        
+        if (equipos.length === 0) {
+          selectEquipo.innerHTML = '<option value="">No hay equipos registrados aún</option>';
+        } else {
+          equipos.forEach(equipo => {
+            const option = document.createElement('option');
+            // Usamos el ID del equipo como valor real para la Base de Datos
+            option.value = equipo.IdEquipo; 
+            option.textContent = equipo.Equipo;
+            selectEquipo.appendChild(option);
+          });
+        }
+      } catch (error) {
+        console.error("Error al cargar equipos:", error);
+        selectEquipo.innerHTML = '<option value="">Error al cargar equipos</option>';
+      }
+    });
+
+    // 2. Enviar los datos al PHP cuando se envíe el formulario
+    document.getElementById('formJugador').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const nombre = document.getElementById('nombre').value;
+      const apellido = document.getElementById('apellido').value;
+      const curp = document.getElementById('curp').value.toUpperCase();
+      const telefono = document.getElementById('telefono').value;
+      const equipo_id = document.getElementById('equipo').value;
+
+      if (curp.length !== 18) {
+        alert('⚠️ La CURP debe tener exactamente 18 caracteres');
+        return;
+      }
+
+      if (telefono.length !== 10 || isNaN(telefono)) {
+        alert('⚠️ El teléfono de emergencia debe tener exactamente 10 dígitos numéricos');
+        return;
+      }
+
+      if (!equipo_id) {
+        alert('⚠️ Por favor selecciona un equipo válido.');
+        return;
+      }
+
+      try {
+        const response = await fetch('guardar_jugador.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ nombre, apellido, curp, telefono, equipo_id })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert(`✅ ¡Fichaje Exitoso! Jugador dado de alta.\n\nNombre: ${nombre} ${apellido}\nCURP: ${curp}`);
+          this.reset();
+        } else {
+          alert('🚫 Error: ' + result.mensaje);
+        }
+
+      } catch (error) {
+        alert('🚫 Error de conexión al guardar el jugador en el servidor.');
+        console.error("Detalle:", error);
+      }
+    });
+  </script>
+</body>
+</html>

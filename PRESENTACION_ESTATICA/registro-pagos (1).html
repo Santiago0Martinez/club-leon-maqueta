@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Pagos - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
+        repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px);
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .container {
+      width: 900px;
+      background: rgba(52, 195, 143, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 3px solid #5060cc;
+    }
+
+    .header {
+      background: #e8e8e8;
+      padding: 12px 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot:nth-child(1) { background: #e74c3c; }
+    .dot:nth-child(2) { background: #f39c12; }
+    .dot:nth-child(3) { background: #2ecc71; }
+
+    .content {
+      padding: 60px 80px;
+      position: relative;
+      text-align: center;
+    }
+
+    .top-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #111;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .top-btn:hover {
+      background: #000;
+      transform: translateY(-2px);
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: #111;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      color: #1a1a1a;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 80px;
+    }
+
+    .btn-options {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-option {
+      background: #111;
+      color: white;
+      padding: 40px 60px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      border: 3px solid #2ecc71;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .btn-option:hover {
+      background: #2ecc71;
+      color: #111;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(46, 204, 113, 0.5);
+    }
+
+    /* Balón decorativo */
+    .ball {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      width: 100px;
+      opacity: 0.2;
+    }
+
+    /* Jugador decorativo */
+    .player {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 140px;
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div class="content">
+      <button class="top-btn" onclick="location.href='menu-opciones.html'">Regresar</button>
+
+      <!-- Balón SVG -->
+      <svg class="ball" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="95" fill="white" stroke="#111" stroke-width="6"/>
+        <polygon points="100,40 134,63 121,102 79,102 66,63" fill="#111"/>
+      </svg>
+
+      <!-- Jugador SVG -->
+      <svg class="player" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="30" rx="22" ry="24" fill="#111"/>
+        <path d="M88 54 Q80 100 75 130 L145 130 Q140 100 132 54 Z" fill="#111"/>
+        <path d="M125 130 Q145 180 175 200" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <h1>Opción de pagos</h1>
+      <p class="subtitle">Club Deportivo León Saltillo</p>
+
+      <div class="btn-options">
+        <button class="btn-option" onclick="location.href='pago-inscripcion.html'">
+          Pago de inscripcion
+        </button>
+        <button class="btn-option" onclick="location.href='pago-arbitraje.html'">
+          Pago de arbitraje
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

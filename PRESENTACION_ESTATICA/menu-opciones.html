@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú de Opciones - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(0deg, #1a4a1a 0%, #2ecc71 100%);
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .container {
+      width: 850px;
+      /* Cambiamos a auto para que crezca según los botones */
+      height: auto; 
+      min-height: 550px;
+      background: #2c3e50; 
+      border-radius: 15px;
+      padding: 40px;
+      border: 3px solid #2ecc71;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: white;
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      color: #2ecc71;
+      font-weight: 700;
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .grid-menu {
+      display: grid;
+      /* Forzamos 2 columnas claras */
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 15px;
+      flex-grow: 1;
+    }
+
+    .btn-menu {
+      background: #111;
+      color: white;
+      /* Reducimos el padding de 35px a 20px para que no ocupen tanto espacio vertical */
+      padding: 20px 10px; 
+      border: 2px solid #2ecc71;
+      border-radius: 10px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-menu:hover {
+      background: #2ecc71;
+      color: #111;
+      transform: scale(1.02);
+    }
+
+    .btn-admin {
+      border-color: #5060cc; 
+    }
+    .btn-admin:hover {
+      background: #5060cc;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MENÚ DE OPCIONES</h1>
+    <p class="subtitle">Club Deportivo León Saltillo</p>
+
+    <div class="grid-menu">
+      <button class="btn-menu" onclick="location.href='registro-equipos.html'">Registro de Equipos</button>
+      <button class="btn-menu" onclick="location.href='registro-pagos.html'">Registro de Pagos</button>
+      <button class="btn-menu" onclick="location.href='roles-juego-tabla.html'">Registro de Rol de Juego</button>
+      <button class="btn-menu" onclick="location.href='tabla-posiciones.html'">Tabla de Posiciones</button>
+      <button class="btn-menu" onclick="location.href='registro-jugadores.html'">Registro de Jugadores</button>
+      <button class="btn-menu btn-admin" onclick="location.href='gestionar-usuarios.html'">Gestión de Usuarios</button>
+    </div>
+    
+    <button class="btn-menu" style="margin-top: 20px; background: #e74c3c; border-color: #c0392b;" onclick="cerrarSesion()">Cerrar Sesión</button>
+  </div>
+
+  <script>
+    async function verificarSesion() {
+      try {
+        // omitido
+        const data = await res.json();
+        if (!data.logged_in) {
+          window.location.href = 'index.html';
+        }
+      } catch (e) {
+        console.error('Error verificando sesión', e);
+      }
+    }
+    
+    async function cerrarSesion() {
+      try {
+        await fetch('cerrar_sesion.php');
+        window.location.href = 'index.html';
+      } catch (e) {
+        console.error('Error cerrando sesión', e);
+      }
+    }
+
+    verificarSesion();
+  </script>
+</body>
+</html>

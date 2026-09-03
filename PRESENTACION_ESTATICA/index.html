@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inicio de Sesión – Club Deportivo León Saltillo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <div class="card">
+    <!-- Header tipo marcador -->
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="card-title-small">⚽ Sport Admin</div>
+    </div>
+
+    <!-- Líneas decorativas de cancha -->
+    <div class="linea-cancha"></div>
+    <div class="linea-cancha"></div>
+
+    <!-- Balón decorativo -->
+    <svg class="ball-decor" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="ballShine">
+          <stop offset="30%" stop-color="#ffffff" />
+          <stop offset="100%" stop-color="#e0e0e0" />
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="100" r="95" fill="url(#ballShine)" stroke="#111" stroke-width="6"/>
+      <polygon points="100,40 134,63 121,102 79,102 66,63" fill="#111"/>
+      <polygon points="100,40 66,63 50,30 85,10 115,10 150,30 134,63" fill="none" stroke="#111" stroke-width="5"/>
+      <line x1="66" y1="63" x2="50" y2="90" stroke="#111" stroke-width="5"/>
+      <line x1="79" y1="102" x2="60" y2="120" stroke="#111" stroke-width="5"/>
+      <line x1="121" y1="102" x2="140" y2="120" stroke="#111" stroke-width="5"/>
+      <line x1="134" y1="63" x2="152" y2="90" stroke="#111" stroke-width="5"/>
+      <line x1="100" y1="40" x2="100" y2="15" stroke="#111" stroke-width="5"/>
+    </svg>
+
+    <!-- Jugador decorativo -->
+    <svg class="player-silhouette" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="110" cy="30" rx="22" ry="24" fill="#111"/>
+      <path d="M88 54 Q80 100 75 130 L145 130 Q140 100 132 54 Z" fill="#111"/>
+      <path d="M88 60 Q60 40 45 20" stroke="#111" stroke-width="18" stroke-linecap="round" fill="none"/>
+      <path d="M132 60 Q155 90 165 110" stroke="#111" stroke-width="18" stroke-linecap="round" fill="none"/>
+      <path d="M95 130 Q85 190 80 240" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <path d="M125 130 Q145 180 175 200" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <path d="M80 240 Q70 255 60 255" stroke="#111" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <path d="M175 200 Q190 205 195 195" stroke="#111" stroke-width="14" stroke-linecap="round" fill="none"/>
+      <!-- Balón que patea -->
+      <circle cx="190" cy="230" r="28" fill="white" stroke="#111" stroke-width="5"/>
+      <polygon points="190,208 203,217 198,232 182,232 177,217" fill="#111"/>
+    </svg>
+
+    <div class="card-inner">
+      <!-- Escudo del club -->
+      <div class="escudo">L</div>
+
+      <h1>Inicio de Sesión</h1>
+      <p class="subtitle">⚽ Club Deportivo León Saltillo ⚽</p>
+
+      <div class="field">
+        <label>🏃 ID de Usuario</label>
+        <div class="input-wrapper">
+          <input type="text" id="user-input" placeholder="Enctigo01" autocomplete="off"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>🔒 Contraseña</label>
+        <div class="input-wrapper">
+          <input type="password" id="pass-input" placeholder="••••••••" autocomplete="current-password"/>
+          <button class="toggle-pass" onclick="togglePass()" title="Mostrar/Ocultar">
+            <span id="eye-icon">👁️</span>
+          </button>
+        </div>
+      </div>
+
+      <p class="msg" id="error-msg">🚫 ¡TARJETA ROJA! ID o contraseña incorrectos</p>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="recuperar()">
+          <span style="position: relative; z-index: 1;">Recuperar Contraseña</span>
+        </button>
+        <button class="btn btn-primary" onclick="ingresar()">
+          <span style="position: relative; z-index: 1;">Ingresar al Campo ⚽</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

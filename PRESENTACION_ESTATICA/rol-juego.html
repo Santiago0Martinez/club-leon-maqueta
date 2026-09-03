@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creación de Rol de Juego - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
+        repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px);
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .container {
+      width: 950px;
+      background: rgba(52, 195, 143, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 3px solid #5060cc;
+    }
+
+    .header {
+      background: #1a1a1a;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot:nth-child(1) { background: #e74c3c; }
+    .dot:nth-child(2) { background: #f39c12; }
+    .dot:nth-child(3) { background: #2ecc71; }
+
+    .jornada {
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .content {
+      padding: 40px 50px;
+      position: relative;
+    }
+
+    .top-btn {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .top-btn:hover {
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      color: #111;
+      margin-bottom: 5px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      color: #1a1a1a;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .filter-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-title {
+      font-weight: 700;
+      color: #111;
+      letter-spacing: 1px;
+    }
+
+    .filter-btn {
+      background: white;
+      color: #111;
+      padding: 8px 16px;
+      border: 2px solid #111;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+      background: #111;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    th {
+      background: #111;
+      color: white;
+      padding: 12px;
+      font-weight: 700;
+      text-align: center;
+      border: 2px solid #1a1a1a;
+    }
+
+    td {
+      background: rgba(52, 195, 143, 0.6);
+      padding: 15px 12px;
+      text-align: center;
+      border: 2px solid rgba(0,0,0,0.2);
+      color: #111;
+      font-weight: 600;
+    }
+
+    tr:hover td {
+      background: rgba(52, 195, 143, 0.8);
+    }
+
+    .btn-agregar {
+      display: block;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 16px 50px;
+      border: 3px solid #2ecc71;
+      border-radius: 30px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-agregar:hover {
+      background: #2ecc71;
+      color: #111;
+      transform: scale(1.05);
+    }
+
+    /* Jugador decorativo */
+    .player {
+      position: absolute;
+      right: 10px;
+      bottom: 20px;
+      width: 130px;
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="jornada">JORNADA #3</div>
+    </div>
+
+    <div class="content">
+      <button class="top-btn" onclick="location.href='menu-opciones.html'">REGRESAR</button>
+
+      <!-- Jugador SVG -->
+      <svg class="player" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="30" rx="22" ry="24" fill="#111"/>
+        <path d="M88 54 Q80 100 75 130 L145 130 Q140 100 132 54 Z" fill="#111"/>
+        <path d="M125 130 Q145 180 175 200" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <h1>Creación de rol de juego</h1>
+      <p class="subtitle">Club Deportivo León Saltillo</p>
+
+      <div class="filter-section">
+        <div class="filter-title">EQUIPOS REGISTRADOS</div>
+        <button class="filter-btn">FILTRO</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>Clasificacion</th>
+            <th>Categoria</th>
+          </tr>
+        </thead>
+        <tbody id="equiposBody">
+          <tr>
+            <td>Xolos Bellavista</td>
+            <td>LIGUILLA</td>
+            <td>VARONIL</td>
+          </tr>
+          <tr>
+            <td>Halcones Fundadores</td>
+            <td>AMISTOSO</td>
+            <td>VARONIL</td>
+          </tr>
+          <tr>
+            <td>Tigres Rayados</td>
+            <td>LIGUILLA</td>
+            <td>FEMENIL</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="btn-agregar" onclick="location.href='agregar-partido.html'">
+        AGREAGAR PARTIDO
+      </button>
+    </div>
+  </div>
+</body>
+</html>

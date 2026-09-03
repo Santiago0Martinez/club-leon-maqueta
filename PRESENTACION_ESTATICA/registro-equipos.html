@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Equipos - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
+        repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px);
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .container {
+      width: 900px;
+      background: rgba(52, 195, 143, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 3px solid #5060cc;
+    }
+
+    .header {
+      background: #1a1a1a;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-regresar {
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-regresar:hover {
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .jornada {
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .clave-badge {
+      background: rgba(0,0,0,0.3);
+      padding: 8px 16px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .content {
+      padding: 50px 70px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: #111;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      color: #1a1a1a;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border-color: #5060cc;
+      box-shadow: 0 0 0 4px rgba(80, 96, 204, 0.2);
+    }
+
+    input::placeholder {
+      color: #666;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary {
+      background: #111;
+      color: white;
+      border: 3px solid #333;
+    }
+
+    .btn-secondary:hover {
+      background: #2c3e50;
+      transform: translateY(-3px);
+    }
+
+    .btn-primary {
+      background: #111;
+      color: white;
+      border: 3px solid #2ecc71;
+    }
+
+    .btn-primary:hover {
+      background: #2ecc71;
+      color: #111;
+      transform: translateY(-3px);
+    }
+
+    /* Tabla de equipos */
+    .table-container { margin-top: 40px; }
+    table { width: 100%; background: rgba(255,255,255,0.1); border-collapse: collapse; margin-bottom: 20px; }
+    th { background: #111; color: white; padding: 12px; font-weight: 700; text-align: center; border: 2px solid #1a1a1a; }
+    td { background: rgba(255,255,255,0.7); padding: 14px 12px; text-align: center; border: 2px solid rgba(0,0,0,0.2); color: #111; font-weight: 600; }
+    tr:hover td { background: white; }
+    .btn-borrar { background: #e74c3c; color: white; padding: 6px 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; }
+
+    /* Balón decorativo */
+    .ball {
+      position: absolute;
+      left: -30px;
+      bottom: -30px;
+      width: 110px;
+      opacity: 0.2;
+    }
+
+    /* Jugador decorativo */
+    .player {
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      width: 150px;
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <button class="btn-regresar" onclick="location.href='menu-opciones.html'">⬅ Regresar al Menú</button>
+      </div>
+      <div class="jornada">JORNADA 3</div>
+      <div class="clave-badge">CLAVE: "AMISTOSOS"</div>
+    </div>
+
+    <div class="content">
+      <!-- Balón SVG -->
+      <svg class="ball" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="95" fill="white" stroke="#111" stroke-width="6"/>
+        <polygon points="100,40 134,63 121,102 79,102 66,63" fill="#111"/>
+      </svg>
+
+      <!-- Jugador SVG -->
+      <svg class="player" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="30" rx="22" ry="24" fill="#111"/>
+        <path d="M88 54 Q80 100 75 130 L145 130 Q140 100 132 54 Z" fill="#111"/>
+        <path d="M125 130 Q145 180 175 200" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <h1>Registro de equipos</h1>
+      <p class="subtitle">Club Deportivo León Saltillo</p>
+
+      <form id="formEquipo">
+        <div class="form-group">
+          <label>Nombre del encargado del equipo</label>
+          <input type="text" id="nombreEncargado" placeholder="Jose Garza Valdez" required>
+        </div>
+
+        <div class="form-group">
+          <label>Teléfono del encargado del equipo</label>
+          <input type="tel" id="telefono" placeholder="844 169 9564" maxlength="10" required>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre del equipo</label>
+          <input type="text" id="nombreEquipo" placeholder="CUERVOS NEGROS" required>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" onclick="registrarJugadores()">
+            Registro de jugadores
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Dar de alta
+          </button>
+        </div>
+      </form>
+
+      <div class="table-container">
+        <h2 style="color: #111; margin-bottom:15px; font-family: 'Bebas Neue', sans-serif;">Equipos Registrados</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre del Equipo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="equiposBody">
+            <tr>
+              <td colspan="3">Cargando equipos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<script>
+    document.getElementById('formEquipo').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const nombreEncargado = document.getElementById('nombreEncargado').value;
+      const telefono = document.getElementById('telefono').value;
+      const nombreEquipo = document.getElementById('nombreEquipo').value;
+
+      if (telefono.length !== 10 || isNaN(telefono)) {
+        alert('⚠️ El teléfono debe contener exactamente 10 dígitos numéricos.');
+        return;
+      }
+
+      try {
+        const response = await fetch('guardar_equipo.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ nombreEncargado, telefono, nombreEquipo })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert(`✅ ¡GOLAZO! Equipo "${nombreEquipo}" dado de alta exitosamente!\n\nEncargado: ${nombreEncargado}\nTeléfono: ${telefono}\nClave: AMISTOSO`);
+          
+          // Limpiar formulario
+          this.reset();
+          cargarEquipos();
+        } else {
+          alert('🚫 Error: ' + result.mensaje);
+        }
+
+      } catch (error) {
+        alert('🚫 Error de conexión al guardar el equipo en el servidor.');
+        console.error("Error detallado:", error);
+      }
+    });
+
+    function registrarJugadores() {
+      // Para la siguiente fase, podrías pasar el ID del equipo por la URL o guardarlo en sessionStorage
+      location.href = 'registro-jugadores.html';
+    }
+
+    async function cargarEquipos() {
+      const tbody = document.getElementById('equiposBody');
+      try {
+        const res = await fetch('obtener_equipos.php');
+        const data = await res.json();
+        if(data.success) {
+          tbody.innerHTML = '';
+          if(data.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3">No hay equipos.</td></tr>';
+            return;
+          }
+          data.data.forEach(eq => {
+            tbody.innerHTML += `
+              <tr>
+                <td>${eq.IdEquipo}</td>
+                <td>${eq.Equipo}</td>
+                <td>
+                  <button class="btn-borrar" onclick="borrarEquipo(${eq.IdEquipo}, '${eq.Equipo}')">BORRAR</button>
+                </td>
+              </tr>
+            `;
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="3">Error al cargar.</td></tr>';
+        }
+      } catch(e) {
+        tbody.innerHTML = '<tr><td colspan="3">Error de red.</td></tr>';
+      }
+    }
+
+    async function borrarEquipo(id, nombre) {
+      if(confirm(`⚠️ ATENCIÓN: Estás a punto de eliminar al equipo "${nombre}".\n\nEsto eliminará TAMBIÉN a sus jugadores, sus abonos y sus partidos programados.\n\n¿Deseas continuar de todas formas?`)) {
+        try {
+          const res = await fetch('eliminar_equipo.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id})
+          });
+          const data = await res.json();
+          if(data.success) {
+            alert('✅ ' + data.mensaje);
+            cargarEquipos();
+          } else {
+            alert('🚫 ' + data.mensaje);
+          }
+        } catch(e) {
+          alert('🚫 Error de conexión al eliminar.');
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", cargarEquipos);
+  </script>
+</body>
+</html>

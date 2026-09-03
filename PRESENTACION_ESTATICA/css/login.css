@@ -1,0 +1,422 @@
+*, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    :root {
+      --verde-pasto: #2ecc71;
+      --verde-oscuro: #27ae60;
+      --blanco: #ffffff;
+      --negro: #111;
+      --gris-oscuro: #1a1a1a;
+      --card-bg: #2c3e50;
+      --input-bg: #1a1a1a;
+      --label: #ecf0f1;
+      --error: #e74c3c;
+      --amarillo: #f39c12;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grass" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><rect fill="%2327ae60" width="40" height="40"/><rect fill="%232ecc71" width="40" height="20"/></pattern></defs><rect fill="url(%23grass)" width="1200" height="600"/><line x1="600" y1="0" x2="600" y2="600" stroke="white" stroke-width="3" opacity="0.4"/><circle cx="600" cy="300" r="80" fill="none" stroke="white" stroke-width="3" opacity="0.4"/><circle cx="600" cy="300" r="2" fill="white" opacity="0.6"/></svg>');
+      background-size: cover;
+      background-position: center;
+      font-family: 'Rajdhani', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Efecto de reflectores en el estadio */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      animation: spotlight1 8s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: 20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      animation: spotlight2 8s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes spotlight1 {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(20px) scale(1.1); }
+    }
+
+    @keyframes spotlight2 {
+      0%, 100% { transform: translateY(0) scale(1.1); }
+      50% { transform: translateY(20px) scale(1); }
+    }
+
+    .card {
+      width: 680px;
+      background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(52, 73, 94, 0.95) 100%);
+      border-radius: 20px;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 40px 100px rgba(0,0,0,0.6),
+        0 0 0 3px var(--verde-pasto),
+        inset 0 0 0 1px rgba(255,255,255,0.1);
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Barra superior estilo marcador de estadio */
+    .card-header {
+      background: linear-gradient(90deg, var(--negro) 0%, var(--gris-oscuro) 100%);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--verde-pasto);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .card-header-left {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transition: all 0.3s;
+    }
+
+    .dot:nth-child(1) { background: #e74c3c; box-shadow: 0 0 10px #e74c3c; }
+    .dot:nth-child(2) { background: #f39c12; box-shadow: 0 0 10px #f39c12; }
+    .dot:nth-child(3) { background: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
+
+    .dot:hover { transform: scale(1.2); }
+
+    .card-title-small {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--verde-pasto);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+    }
+
+    .card-inner {
+      padding: 50px 60px 60px;
+      background: rgba(44, 62, 80, 0.5);
+      position: relative;
+    }
+
+    /* Escudo del club */
+    .escudo {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: 
+        linear-gradient(135deg, var(--verde-pasto) 0%, var(--verde-oscuro) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: white;
+      border: 4px solid var(--blanco);
+      box-shadow: 
+        0 10px 30px rgba(0,0,0,0.4),
+        0 0 30px rgba(46, 204, 113, 0.3);
+      position: relative;
+    }
+
+    .escudo::before {
+      content: '⚽';
+      position: absolute;
+      font-size: 1.2rem;
+      top: -10px;
+      right: -5px;
+      animation: rotate 4s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem;
+      color: var(--blanco);
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      text-shadow: 
+        0 0 20px rgba(46, 204, 113, 0.5),
+        3px 3px 6px rgba(0,0,0,0.8);
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(46, 204, 113, 0.5), 3px 3px 6px rgba(0,0,0,0.8); }
+      50% { text-shadow: 0 0 30px rgba(46, 204, 113, 0.8), 3px 3px 6px rgba(0,0,0,0.8); }
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--amarillo);
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .field {
+      margin-bottom: 26px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--verde-pasto);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
+      padding: 16px 18px;
+      color: var(--blanco);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    input:focus {
+      border-color: var(--verde-pasto);
+      box-shadow: 
+        0 0 0 4px rgba(46, 204, 113, 0.2),
+        inset 0 2px 8px rgba(0,0,0,0.3);
+      background: #0f0f0f;
+    }
+
+    input::placeholder {
+      color: #555;
+      font-weight: 400;
+    }
+
+    /* Toggle de contraseña */
+    .toggle-pass {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.3s;
+      padding: 4px;
+    }
+
+    .toggle-pass:hover {
+      color: var(--verde-pasto);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    /* Mensaje de error estilo tarjeta roja */
+    .msg {
+      margin-top: 20px;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--blanco);
+      background: linear-gradient(135deg, var(--error) 0%, #c0392b 100%);
+      border-left: 5px solid #a93226;
+      border-radius: 8px;
+      display: none;
+      animation: slideIn 0.4s ease;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Botones estilo uniformes de fútbol */
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 45px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px 28px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .btn:active { 
+      transform: scale(0.96); 
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+      color: var(--blanco);
+      border: 3px solid #7f8c8d;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--amarillo);
+      box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--verde-pasto) 0%, var(--verde-oscuro) 100%);
+      color: var(--blanco);
+      border: 3px solid var(--verde-oscuro);
+      box-shadow: 
+        0 8px 25px rgba(46, 204, 113, 0.5),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 
+        0 12px 35px rgba(46, 204, 113, 0.6),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+    }
+
+    /* Balón decorativo (más grande y visible) */
+    .ball-decor {
+      position: absolute;
+      left: -40px;
+      bottom: -40px;
+      width: 150px;
+      opacity: 0.25;
+      pointer-events: none;
+      animation: ballBounce 3s ease-in-out infinite;
+    }
+
+    @keyframes ballBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Jugador decorativo (más grande y visible) */
+    .player-silhouette {
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+      width: 200px;
+      opacity: 0.25;
+      pointer-events: none;
+      animation: playerMove 4s ease-in-out infinite;
+    }
+
+    @keyframes playerMove {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-10px); }
+    }
+
+    /* Líneas de cancha decorativas */
+    .linea-cancha {
+      position: absolute;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      width: 100%;
+    }
+
+    .linea-cancha:nth-child(1) { top: 30%; }
+    .linea-cancha:nth-child(2) { top: 70%; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .card {
+        width: 95%;
+        margin: 20px;
+      }
+      
+      .card-inner {
+        padding: 40px 30px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .btn-row {
+        flex-direction: column;
+      }
+
+      .player-silhouette,
+      .ball-decor {
+        opacity: 0.15;
+      }
+    }

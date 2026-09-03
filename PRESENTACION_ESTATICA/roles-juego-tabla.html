@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roles de Juego - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    /* ... (Todo tu CSS se queda igualito, no te moví ni un color) ... */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%), repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px);
+      font-family: 'Rajdhani', sans-serif;
+      padding: 20px;
+    }
+    .container {
+      width: 1000px;
+      background: rgba(52, 195, 143, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 3px solid #5060cc;
+    }
+    .header { background: #1a1a1a; padding: 12px 20px; display: flex; justify-content: flex-end; }
+    .jornada { color: white; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
+    .content { padding: 40px 50px; position: relative; }
+    .top-btn { position: absolute; top: 20px; left: 30px; background: rgba(255,255,255,0.9); color: #111; padding: 10px 20px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    .top-btn:hover { background: white; }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; color: #111; text-align: center; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .subtitle { color: #1a1a1a; font-size: 0.85rem; font-weight: 600; text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+    table { width: 100%; background: rgba(255,255,255,0.1); border-collapse: collapse; margin-bottom: 30px; }
+    th { background: #111; color: white; padding: 12px; font-weight: 700; text-align: center; border: 2px solid #1a1a1a; }
+    td { background: rgba(52, 195, 143, 0.6); padding: 14px 12px; text-align: center; border: 2px solid rgba(0,0,0,0.2); color: #111; font-weight: 600; text-transform: uppercase; }
+    tr:hover td { background: rgba(52, 195, 143, 0.8); cursor: pointer; }
+    tr.selected td { background: rgba(80, 96, 204, 0.6); border-color: #5060cc; color: white; }
+    .btn-row { display: flex; gap: 20px; justify-content: center; }
+    .btn { padding: 14px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s; }
+    .btn-editar { background: rgba(255,255,255,0.8); color: #111; border: 2px solid #111; }
+    .btn-editar:hover:not(:disabled) { background: white; transform: translateY(-2px); }
+    .btn-editar:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-menu { background: #111; color: white; border: 3px solid #2ecc71; }
+    .btn-menu:hover { background: #2ecc71; color: #111; }
+    .btn-compartir { background: rgba(0,0,0,0.7); color: white; border: 2px solid white; display: flex; align-items: center; gap: 10px; }
+    .btn-compartir:hover { background: rgba(0,0,0,0.9); }
+    .player { position: absolute; right: 10px; bottom: 20px; width: 130px; opacity: 0.2; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="jornada">ROLES PROGRAMADOS</div>
+    </div>
+
+    <div class="content">
+      <button class="top-btn" onclick="location.href='rol-juego.html'">REGRESAR</button>
+
+      <!-- Jugador SVG -->
+      <svg class="player" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="30" rx="22" ry="24" fill="#111"/>
+        <path d="M88 54 Q80 100 75 130 L145 130 Q140 100 132 54 Z" fill="#111"/>
+        <path d="M125 130 Q145 180 175 200" stroke="#111" stroke-width="20" stroke-linecap="round" fill="none"/>
+      </svg>
+
+      <h1>Roles de juego</h1>
+      <p class="subtitle">Club Deportivo León Saltillo</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo Local</th>
+            <th>Equipo Visitante</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Cancha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="rolesBody">
+          <tr>
+            <td colspan="6">Cargando partidos...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="btn-row">
+        <!-- El botón Editar ahora te lleva a programar uno nuevo para cumplir tu flujo -->
+        <button class="btn btn-editar" onclick="location.href='agregar-partido.html'">
+          + Programar Partido
+        </button>
+        <button class="btn btn-menu" onclick="location.href='menu-opciones.html'">
+          Menú
+        </button>
+        <button class="btn btn-compartir" onclick="compartir()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+          </svg>
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedRow = null;
+
+    function selectRow(row) {
+      if (selectedRow) selectedRow.classList.remove('selected');
+      row.classList.add('selected');
+      selectedRow = row;
+    }
+
+    function compartir() {
+      const btn = document.querySelector('.btn-compartir');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Generando...';
+      
+      const element = document.querySelector('table');
+      const container = document.createElement('div');
+      container.innerHTML = `
+        <h1 style="text-align: center; font-family: sans-serif; margin-bottom: 5px; color: #111;">ROLES DE JUEGO</h1>
+        <h3 style="text-align: center; font-family: sans-serif; color: #555; margin-bottom: 20px;">CLUB DEPORTIVO LEÓN SALTILLO</h3>
+      `;
+      container.appendChild(element.cloneNode(true));
+      
+      container.style.padding = '20px';
+      container.style.background = 'white';
+      
+      // Forzar estilos oscuros para el PDF
+      const ths = container.querySelectorAll('th');
+      ths.forEach(th => {
+        th.style.background = '#111';
+        th.style.color = 'white';
+        th.style.padding = '12px';
+      });
+      
+      const tds = container.querySelectorAll('td');
+      tds.forEach(td => {
+        td.style.color = '#111';
+        td.style.background = '#f9f9f9';
+        td.style.border = '1px solid #ddd';
+        td.style.padding = '12px';
+      });
+
+      html2pdf().set({
+        margin: 15,
+        filename: 'Roles_de_Juego_Leon_Saltillo.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(container).save().then(() => {
+        btn.innerHTML = originalText;
+      });
+    }
+
+    // JALAR LOS DATOS DE LA BASE DE DATOS
+    document.addEventListener("DOMContentLoaded", async () => {
+      const rolesBody = document.getElementById('rolesBody');
+
+      try {
+        const response = await fetch('obtener_partidos.php');
+        const result = await response.json();
+
+        if (result.success) {
+          rolesBody.innerHTML = ''; 
+
+          if (result.data.length === 0) {
+            rolesBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay partidos programados en el rol todavía.</td></tr>';
+            return;
+          }
+
+          result.data.forEach(partido => {
+            // Le damos vuelta a la fecha para que se vea bonita (DD/MM/YYYY)
+            const fechaParts = partido.Fecha.split('-');
+            const fechaFormateada = fechaParts.length === 3 ? `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}` : partido.Fecha;
+
+            rolesBody.innerHTML += `
+              <tr onclick="selectRow(this)">
+                <td>${partido.EquipoLocal}</td>
+                <td>${partido.EquipoVisitante}</td>
+                <td>${fechaFormateada}</td>
+                <td>${partido.Hora}</td>
+                <td>${partido.Cancha}</td>
+                <td>
+                  <button class="btn" style="background:#e74c3c; color:white; padding: 6px 12px; font-size: 0.9rem;" onclick="borrarPartido(event, ${partido.IdPartido})">BORRAR</button>
+                </td>
+              </tr>
+            `;
+          });
+        } else {
+          rolesBody.innerHTML = `<tr><td colspan="6">Error: ${result.mensaje}</td></tr>`;
+        }
+      } catch (error) {
+        console.error("Error al cargar los partidos:", error);
+        rolesBody.innerHTML = '<tr><td colspan="6">Error de conexión al cargar el rol de juego.</td></tr>';
+      }
+    });
+
+    async function borrarPartido(event, id) {
+      event.stopPropagation();
+      if(confirm('¿Estás seguro de que deseas cancelar y eliminar este partido del rol?')) {
+        try {
+          const res = await fetch('eliminar_partido.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id})
+          });
+          const data = await res.json();
+          if(data.success) {
+            alert('✅ Partido eliminado.');
+            location.reload();
+          } else {
+            alert('🚫 ' + data.mensaje);
+          }
+        } catch(e) {
+          alert('🚫 Error al conectar con el servidor.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

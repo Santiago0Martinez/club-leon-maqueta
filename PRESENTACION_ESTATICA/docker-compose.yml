@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80" # Tu app estará en http://localhost:8080
+    volumes:
+      - .:/var/www/html # Sincroniza tus cambios en código al instante
+    environment:
+      # Variables de entorno para conectar a la BD de Docker
+      - DB_HOST=db
+      - DB_NAME=club_leon
+      - DB_USER=root
+      - DB_PASS=admin
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=club_leon
+    ports:
+      # Mapeamos el puerto 3307 externo al 3306 interno 
+      # para evitar que choque con tu MySQL de XAMPP (que usa el 3306)
+      - "3307:3306" 
+    volumes:
+      # Guarda la información de la base de datos para que no se pierda al apagar Docker
+      - db_data:/var/lib/mysql
+      # Aquí se lee tu init.sql para crear las tablas automáticamente
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+
+volumes:
+  db_data:

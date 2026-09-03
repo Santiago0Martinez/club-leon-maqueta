@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo Usuario - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #2c3e50; font-family: 'Rajdhani', sans-serif; }
+    .container { width: 500px; background: rgba(52, 195, 143, 0.95); border-radius: 15px; padding: 40px; border: 3px solid #5060cc; }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; text-align: center; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+    input, select { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #111; background: #111; color: white; font-family: 'Rajdhani', sans-serif; }
+    .btn-save { width: 100%; padding: 15px; background: #111; color: white; border: 2px solid #2ecc71; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; cursor: pointer; margin-top: 10px; }
+    .btn-save:hover { background: #2ecc71; color: #111; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Nuevo Usuario</h1>
+    <form id="formUser">
+      <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" id="nombre" required>
+      </div>
+      <div class="form-group">
+        <label>Correo</label>
+        <input type="email" id="correo" required>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password" required>
+      </div>
+      <div class="form-group">
+        <label>Rol</label>
+        <select id="rol" required>
+          <option value="1">Administrador</option>
+          <option value="2">Encargado del rol de juego</option>
+          <option value="3">Encargado de la liga</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-save">GUARDAR USUARIO</button>
+      <button type="button" class="btn-save" style="border-color: #ccc;" onclick="location.href='gestionar-usuarios.html'">CANCELAR</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('formUser').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        nombre: document.getElementById('nombre').value,
+        correo: document.getElementById('correo').value,
+        password: document.getElementById('password').value,
+        rol_id: document.getElementById('rol').value
+      };
+
+      try {
+        const response = await fetch('guardar_usuario.php', {
+          method: 'POST',
+          body: JSON.stringify(data)
+        });
+        const res = await response.json();
+        alert(res.mensaje);
+        if(res.success) location.href = 'gestionar-usuarios.html';
+      } catch (error) {
+        alert("Error al conectar con el servidor");
+      }
+    });
+  </script>
+</body>
+</html>

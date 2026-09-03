@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Posiciones - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: 
+        linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
+        repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px);
+      font-family: 'Rajdhani', sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      width: 1050px;
+      background: rgba(52, 195, 143, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 3px solid #5060cc;
+    }
+
+    .header {
+      background: #1a1a1a;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .jornada {
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .content {
+      padding: 40px 50px;
+      position: relative;
+    }
+
+    .top-btn {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .top-btn:hover {
+      background: white;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      color: #111;
+      text-align: center;
+      margin-bottom: 5px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      color: #1a1a1a;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .simbologia {
+      background: rgba(0,0,0,0.3);
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .simbologia-title {
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .simbologia-items {
+      display: flex;
+      gap: 30px;
+    }
+
+    .simbologia-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .color-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+    }
+
+    .color-liguilla-a { background: #3498db; }
+    .color-liguilla-b { background: #9b59b6; }
+    .color-descenso { background: #e74c3c; }
+
+    table {
+      width: 100%;
+      background: #111;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    th {
+      background: #000;
+      color: white;
+      padding: 12px 8px;
+      font-weight: 700;
+      text-align: center;
+      font-size: 0.85rem;
+      border: 2px solid #1a1a1a;
+    }
+
+    td {
+      padding: 14px 10px;
+      text-align: center;
+      border: 2px solid #1a1a1a;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    tr:hover td {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Colores por posición */
+    tbody tr:nth-child(1) td:first-child,
+    tbody tr:nth-child(2) td:first-child,
+    tbody tr:nth-child(3) td:first-child {
+      background: #3498db !important;
+      color: white;
+    }
+
+    tbody tr.liguilla-b td:first-child {
+      background: #9b59b6 !important;
+    }
+
+    tbody tr.descenso td:first-child {
+      background: #e74c3c !important;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 14px 40px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-cargar {
+      background: rgba(255,255,255,0.8);
+      color: #111;
+      border: 2px solid #111;
+    }
+
+    .btn-cargar:hover {
+      background: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-compartir {
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-compartir:hover {
+      background: rgba(0,0,0,0.9);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="jornada">JORNADA #2</div>
+    </div>
+
+    <div class="content">
+      <button class="top-btn" onclick="location.href='menu-opciones.html'">REGRESAR</button>
+
+      <h1>Tabla de posiciones</h1>
+      <p class="subtitle">Club Deportivo León Saltillo</p>
+
+      <div class="simbologia">
+        <div class="simbologia-title">SIMBOLOGÍA</div>
+        <div class="simbologia-items">
+          <div class="simbologia-item">
+            <div class="color-box color-liguilla-a"></div>
+            <span>LIGUILLA A</span>
+          </div>
+          <div class="simbologia-item">
+            <div class="color-box color-liguilla-b"></div>
+            <span>LIGUILLA B</span>
+          </div>
+          <div class="simbologia-item">
+            <div class="color-box color-descenso"></div>
+            <span>ZONA DE DESCENSO</span>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Equipo</th>
+            <th>PJ</th>
+            <th>V</th>
+            <th>E</th>
+            <th>D</th>
+            <th>PTS</th>
+            <th>Goles a favor</th>
+            <th>Goles en contra</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Xolos Bellavista</td>
+            <td>2</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>7</td>
+            <td>6</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Cardenales</td>
+            <td>2</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>3</td>
+            <td>3</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Rayados</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>5</td>
+          </tr>
+          <tr class="liguilla-b">
+            <td>4</td>
+            <td>Tigres Unidos</td>
+            <td>2</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>4</td>
+            <td>4</td>
+            <td>1</td>
+          </tr>
+          <tr class="liguilla-b">
+            <td>5</td>
+            <td>Leones FC</td>
+            <td>2</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr class="descenso">
+            <td>6</td>
+            <td>Halcones</td>
+            <td>2</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="btn-row">
+        <button class="btn btn-cargar" onclick="location.href='cargar-resultados.html'">
+          Cargar Resultados
+        </button>
+        <button class="btn btn-compartir" onclick="compartir()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+          </svg>
+          Compartir
+        </button>
+      </div>
+    </div>
+  </div>
+<script>
+    function compartir() {
+      alert('📱 Compartiendo tabla de posiciones por WhatsApp...');
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const tbody = document.querySelector('tbody');
+      
+      try {
+        const response = await fetch('obtener_posiciones.php');
+        const result = await response.json();
+
+        if (result.success) {
+          tbody.innerHTML = ''; // Limpiamos los datos de "mentiritas"
+
+          if (result.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9">Aún no hay resultados registrados en el torneo.</td></tr>';
+            return;
+          }
+
+          result.data.forEach((equipo, index) => {
+            const posicion = index + 1;
+            let claseFila = '';
+
+            // Asignar colores según la posición (Liguilla B = lugares 4 y 5, Descenso = lugar 6+)
+            if (posicion === 4 || posicion === 5) {
+                claseFila = 'liguilla-b';
+            } else if (posicion >= 6) {
+                claseFila = 'descenso';
+            }
+
+            tbody.innerHTML += `
+              <tr class="${claseFila}">
+                <td>${posicion}</td>
+                <td>${equipo.Equipo}</td>
+                <td>${equipo.PJ}</td>
+                <td>${equipo.V}</td>
+                <td>${equipo.E}</td>
+                <td>${equipo.D}</td>
+                <td>${equipo.PTS}</td>
+                <td>${equipo.GolesAFavor}</td>
+                <td>${equipo.GolesEnContra}</td>
+              </tr>
+            `;
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="9">Error: ${result.mensaje}</td></tr>`;
+        }
+      } catch (error) {
+        console.error("Error al cargar la tabla:", error);
+        tbody.innerHTML = '<tr><td colspan="9">Error de conexión con la base de datos.</td></tr>';
+      }
+    });
+  </script>
+</body>
+</html>

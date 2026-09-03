@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestionar Usuarios - SportAdmin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%), repeating-linear-gradient(0deg, #27ae60 0px, #27ae60 40px, #2ecc71 40px, #2ecc71 80px); font-family: 'Rajdhani', sans-serif; padding: 20px; }
+    .container { width: 1000px; background: rgba(52, 195, 143, 0.95); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.6); border: 3px solid #5060cc; }
+    .header { background: #1a1a1a; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .jornada { color: white; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
+    .content { padding: 40px 50px; position: relative; }
+    .top-btn { position: absolute; top: 20px; left: 30px; background: rgba(255,255,255,0.9); color: #111; padding: 10px 20px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    .top-btn:hover { background: white; }
+    h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; color: #111; text-align: center; margin-bottom: 5px; }
+    .subtitle { color: #1a1a1a; font-size: 0.85rem; font-weight: 600; text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+    
+    table { width: 100%; background: rgba(255,255,255,0.1); border-collapse: collapse; margin-bottom: 30px; }
+    th { background: #111; color: white; padding: 12px; font-weight: 700; text-align: center; border: 2px solid #1a1a1a; }
+    td { background: rgba(255,255,255,0.7); padding: 14px 12px; text-align: center; border: 2px solid rgba(0,0,0,0.2); color: #111; font-weight: 600; }
+    tr:hover td { background: white; }
+    
+    .btn-row { display: flex; gap: 20px; justify-content: center; }
+    .btn { padding: 14px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s; }
+    .btn-nuevo { background: #111; color: white; border: 3px solid #2ecc71; }
+    .btn-nuevo:hover { background: #2ecc71; color: #111; }
+    
+    .accion-btn { padding: 6px 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; margin: 0 5px; }
+    .btn-editar { background: #f1c40f; color: #111; }
+    .btn-borrar { background: #e74c3c; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="jornada">MÓDULO DE SEGURIDAD</div>
+    </div>
+
+    <div class="content">
+      <button class="top-btn" onclick="location.href='menu-opciones.html'">REGRESAR</button>
+
+      <h1>Gestionar Usuarios</h1>
+      <p class="subtitle">Administración de Accesos - SportAdmin</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre Completo</th>
+            <th>Correo (Login)</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="usuariosBody">
+          <tr>
+            <td colspan="5">Cargando usuarios...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="btn-row">
+        <button class="btn btn-nuevo" onclick="location.href='agregar-usuario.html'">
+          + NUEVO USUARIO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const tbody = document.getElementById('usuariosBody');
+      
+      try {
+        const response = await fetch('obtener_usuarios.php');
+        const result = await response.json();
+
+        if (result.success) {
+          tbody.innerHTML = ''; 
+
+          if (result.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5">No hay usuarios registrados. ¡Agrega el primero!</td></tr>';
+            return;
+          }
+
+          result.data.forEach(user => {
+            tbody.innerHTML += `
+              <tr>
+                <td>${user.IdUsuario}</td>
+                <td>${user.NombreCompleto}</td>
+                <td>${user.Correo}</td>
+                <td><strong>${user.NombreRol}</strong></td>
+                <td>
+                  <button class="accion-btn btn-editar" onclick="editarUsuario(${user.IdUsuario})">EDITAR</button>
+                  <button class="accion-btn btn-borrar" onclick="borrarUsuario(${user.IdUsuario}, '${user.NombreCompleto}')">BORRAR</button>
+                </td>
+              </tr>
+            `;
+          });
+        } else {
+          tbody.innerHTML = `<tr><td colspan="5">Error: ${result.mensaje}</td></tr>`;
+        }
+      } catch (error) {
+        console.error("Error al cargar la tabla:", error);
+        tbody.innerHTML = '<tr><td colspan="5">Error de conexión con la base de datos.</td></tr>';
+      }
+    });
+
+    function editarUsuario(id) {
+      alert('Esta función te llevará a la pantalla de editar al usuario ID: ' + id);
+      // Aquí después le metemos el link a editar-usuario.html?id=...
+    }
+
+    async function borrarUsuario(id, nombre) {
+      if(confirm(`¿Estás seguro de que deseas eliminar al usuario: ${nombre}?`)) {
+        try {
+          const res = await fetch('eliminar_usuario.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id})
+          });
+          const data = await res.json();
+          if(data.success) {
+            alert('✅ ' + data.mensaje);
+            location.reload();
+          } else {
+            alert('🚫 Error: ' + data.mensaje);
+          }
+        } catch(e) {
+          alert('🚫 Error de conexión al intentar eliminar el usuario.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
